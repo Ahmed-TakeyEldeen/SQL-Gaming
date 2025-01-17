@@ -63,6 +63,3 @@ INNER JOIN
 ON
     ps4sales.game = vgsales.title
 ;
-
-
-
