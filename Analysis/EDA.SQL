@@ -76,3 +76,32 @@ GROUP BY
 ORDER BY
     COUNT(global_sales) DESC
 ;
+
+
+SELECT
+    title,
+    release_date AT TIME ZONE 'UTC' AT TIME ZONE 'EST'
+FROM
+    vgsales2024
+LIMIT
+    20
+;
+
+
+SELECT 
+    EXTRACT(MONTH FROM release_date) AS MONTH,
+    EXTRACT(YEAR FROM release_date) AS year
+FROM 
+    vgsales2024
+;
+
+SELECT
+    COUNT(total_sales),
+    EXTRACT(year from release_date)
+FROM
+    vgsales2024
+GROUP BY
+    EXTRACT(year from release_date)
+ORDER BY
+    EXTRACT(year from release_date) asc
+;
