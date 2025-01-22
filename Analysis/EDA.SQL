@@ -96,7 +96,7 @@ FROM
 ;
 
 SELECT
-    COUNT(total_sales),
+    SUM(total_sales),
     EXTRACT(year from release_date)
 FROM
     vgsales2024
@@ -104,4 +104,38 @@ GROUP BY
     EXTRACT(year from release_date)
 ORDER BY
     EXTRACT(year from release_date) asc
+;
+
+SELECT
+    SUM(total_sales),
+    console
+FROM
+    vgsales2024
+WHERE
+    total_sales IS NOT NULL
+GROUP BY
+    console
+ORDER BY
+    SUM(total_sales) DESC
+;
+
+SELECT
+    title,
+    console,
+    CASE
+        WHEN console = 'PS1' THEN 'Old'
+        WHEN console = 'PS2' THEN 'gold'
+        WHEN console = 'PS3' THEN 'Decent'
+        WHEN console = 'PS4' THEN 'VGood'
+        ELSE 'consols'
+    END AS GG
+FROM
+    vgsales
+;
+
+
+SELECT
+    *
+FROM
+    vgsales
 ;
