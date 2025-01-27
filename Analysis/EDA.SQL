@@ -132,10 +132,3 @@ SELECT
 FROM
     vgsales
 ;
-
-
-SELECT
-    *
-FROM
-    vgsales
-;

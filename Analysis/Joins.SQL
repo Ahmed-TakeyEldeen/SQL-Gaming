@@ -1,22 +1,4 @@
 SELECT
-    *
-FROM
-    vgsales
-LIMIT
-    10
-;
-
-
-SELECT
-    *
-FROM
-    ps4sales
-LIMIT
-    10
-;
-
-
-SELECT
     vgsales.title,
     vgsales.console,
     vgsales.genre,
@@ -63,3 +45,97 @@ INNER JOIN
 ON
     ps4sales.game = vgsales.title
 ;
+
+SELECT
+    game,
+    year,
+    genre
+FROM (
+    SELECT *
+    FROM ps4sales
+    where year = '2018'
+) AS ps4sales2018;  -- Subquery
+
+
+WITH ps4sales2018 AS (
+    SELECT *
+    FROM ps4sales
+    WHERE year = '2018'
+)
+SELECT
+    *
+FROM
+    ps4sales2018
+; -- Common Table Expression (CTE)
+
+
+SELECT 
+    title
+FROM
+    vgsales2024
+WHERE title 
+IN(
+SELECT 
+    title
+FROM
+    vgsales
+)
+
+WITH pub as(
+SELECT 
+    publisher,
+    COUNT(*) as total_puplisher
+FROM
+    vgsales
+GROUP BY
+    vgsales.publisher
+ORDER BY
+    COUNT(*) DESC
+)
+SELECT 
+    vgsales2024.puplisher as vg2024publisher,
+    pub.total_puplisher
+FROM vgsales2024
+LEFT JOIN PUB ON vgsales2024.puplisher = pub.publisher
+where total_puplisher is NOT NULL
+ORDER BY total_puplisher DESC
+;
+
+
+WITH playstation as(
+SELECT
+    title,
+    COUNT(*) as count_of_publisher
+FROM
+    vgsalesps4
+GROUP BY
+    title
+ORDER BY
+    COUNT(*) DESC
+)
+SELECT 
+    ps4sales.game,
+    playstation.count_of_publisher
+FROM
+    ps4sales
+LEFT JOIN
+    playstation 
+ON
+    playstation.title = ps4sales.game
+WHERE
+    count_of_publisher IS NOT NULL
+;
+
+CREATE Table vgsalesps4 AS(
+SELECT
+    *
+from
+    vgsales
+where
+    console = 'PS4'
+);
+
+
+
+SELECT *
+FROM ps4sales
