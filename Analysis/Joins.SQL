@@ -69,38 +69,6 @@ FROM
 ; -- Common Table Expression (CTE)
 
 
-SELECT 
-    title
-FROM
-    vgsales2024
-WHERE title 
-IN(
-SELECT 
-    title
-FROM
-    vgsales
-)
-
-WITH pub as(
-SELECT 
-    publisher,
-    COUNT(*) as total_puplisher
-FROM
-    vgsales
-GROUP BY
-    vgsales.publisher
-ORDER BY
-    COUNT(*) DESC
-)
-SELECT 
-    vgsales2024.puplisher as vg2024publisher,
-    pub.total_puplisher
-FROM vgsales2024
-LEFT JOIN PUB ON vgsales2024.puplisher = pub.publisher
-where total_puplisher is NOT NULL
-ORDER BY total_puplisher DESC
-;
-
 
 WITH playstation as(
 SELECT
@@ -114,7 +82,7 @@ ORDER BY
     COUNT(*) DESC
 )
 SELECT 
-    ps4sales.game,
+    ps4sales.publisher,
     playstation.count_of_publisher
 FROM
     ps4sales
@@ -134,8 +102,3 @@ from
 where
     console = 'PS4'
 );
-
-
-
-SELECT *
-FROM ps4sales
