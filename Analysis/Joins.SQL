@@ -70,6 +70,15 @@ FROM
 
 
 
+CREATE Table vgsalesps4 AS(
+SELECT
+    *
+from
+    vgsales
+where
+    console = 'PS4'
+);
+
 WITH playstation as(
 SELECT
     title,
@@ -87,18 +96,9 @@ SELECT
 FROM
     ps4sales
 LEFT JOIN
-    playstation 
+    playstation
 ON
     playstation.title = ps4sales.game
 WHERE
     count_of_publisher IS NOT NULL
 ;
-
-CREATE Table vgsalesps4 AS(
-SELECT
-    *
-from
-    vgsales
-where
-    console = 'PS4'
-);
